@@ -18,9 +18,21 @@ type
   end;
 
   TPosProxyConfig = record
-    
+    size: Integer;
+    sport: Integer;
+    baudrate: LongWord;
+    parity: Byte;
+    bytesize: Byte;
+    stopbits: Byte;
+    iserialsecs: Integer;
+    port: Integer;
+    cnetaddress: String;
+    isocketsecs: Integer;
+    pcallback: Pointer;
+    bBlock: Integer;
+    ihhsecs: Integer;
+    idtsecs: Integer;
   end;
-
   function PosProxyInit(configfile : PChar; pProxyConfig : TPosProxyConfig) : THandle; external 'Proxydll' index 1;
 
 var
@@ -34,7 +46,6 @@ procedure TForm1.btnCallDllClick(Sender: TObject);
 var
    config:TPosProxyConfig;
 begin
-
   PosProxyInit('E:\Git\Delphi\calldll\config.ini', config);
   Application.MessageBox('看到这个对话框就证明调用成功。', '测试');
 end;
