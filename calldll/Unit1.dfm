@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 366
-  Top = 331
+  Left = 459
+  Top = 325
   Width = 428
   Height = 274
   Caption = 'Form1'
@@ -95,6 +95,7 @@ object Form1: TForm1
     Width = 75
     Height = 25
     Caption = #24320#22987#20132#26131
+    Enabled = False
     TabOrder = 1
     OnClick = btnTradeClick
   end
@@ -104,6 +105,7 @@ object Form1: TForm1
     Width = 75
     Height = 25
     Caption = #37322#25918#20195#29702
+    Enabled = False
     TabOrder = 2
     OnClick = btnReleaseClick
   end

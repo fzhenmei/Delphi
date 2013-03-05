@@ -103,7 +103,7 @@ type
   end;
 
 
-  function PosProxyInit(configfile : PChar; pProxyConfig : PPosProxyConfig) : THandle; stdcall; external 'Proxydll.dll';
+  function PosProxyInit(configfile : PAnsiChar; pProxyConfig : PPosProxyConfig) : THandle; stdcall; external 'Proxydll.dll';
   function PosProxyDoTrade(handler : THandle; req : TradeReq; rep : TradeRsp ) : THandle; stdcall; external 'Proxydll.dll';
   function PosProxyUninit() : THandle; stdcall; external 'Proxydll.dll'
 
@@ -133,10 +133,23 @@ end;}
 
 procedure TForm1.btnCallDllClick(Sender: TObject);
 var
-   config:TPosProxyConfig;
+   config: TPosProxyConfig;
+   configName: PAnsiChar;
 begin
-  InitHnadler := PosProxyInit('config.ini', nil);
+  configName := 'E:\Git\Delphi\calldll\config.ini';
+
+  config.baudrate := 9600;
+  config.parity := 0;
+  config.stopbits := 0;
+  config.iserialsecs := 120;
+  config.bBlock := 1;
+  config.sport := 1;
+  config.size := 8;
+
+  InitHnadler := PosProxyInit(configName, nil);
   btnCallDll.Enabled := False;
+  btnTrade.Enabled := True;
+  btnRelease.Enabled := True;
 end;
 
 procedure TForm1.btnTradeClick(Sender: TObject);
@@ -147,8 +160,12 @@ procedure TForm1.btnTradeClick(Sender: TObject);
     p_response : TradeRsp;
     money : array[0..12] of char;
 begin
-  t_request.cType := '0';
-  t_request.payType := '1';
+  t_request.cType := '0'; //交易类型， 正常消费
+  t_request.payType := '1'; //支付方式，银联卡
+
+  //交易次类型，'00'，正常消费
+  t_request.sType[0] := '0';
+  t_request.sType[1] := '0';
 
   t_request.carrTradeSum[0] := '0';
   t_request.carrTradeSum[1] := '0';
@@ -161,16 +178,31 @@ begin
   t_request.carrTradeSum[8] := '0';
   t_request.carrTradeSum[9] := '0';
   t_request.carrTradeSum[10] := '0';
-  t_request.carrTradeSum[11] := '0';
-  t_request.carrTradeSum[12] := '1';
+  t_request.carrTradeSum[11] := '1';
+  t_request.carrTradeSum[12] := '0'; //交易金额，0.01圆
+  //交易流水号， 12 个字符
+  //原交易流水号，6个字符，查询撤销时使用
 
-  t_request.carrTermSN[0] := '0';
+  {t_request.carrTermSN[0] := '0';
   t_request.carrTermSN[1] := '0';
   t_request.carrTermSN[2] := '0';
   t_request.carrTermSN[3] := '0';
   t_request.carrTermSN[4] := '0';
   t_request.carrTermSN[5] := '0';
-  t_request.carrTermSN[6] := '1';
+  t_request.carrTermSN[6] := '1';}
+
+  t_request.carrTradeSN[0] := '0';
+  t_request.carrTradeSN[1] := '0';
+  t_request.carrTradeSN[2] := '0';
+  t_request.carrTradeSN[3] := '0';
+  t_request.carrTradeSN[4] := '0';
+  t_request.carrTradeSN[5] := '0';
+  t_request.carrTradeSN[6] := '1';
+  t_request.carrTradeSN[7] := '0';
+  t_request.carrTradeSN[8] := '0';
+  t_request.carrTradeSN[9] := '0';
+  t_request.carrTradeSN[10] := '0';
+  t_request.carrTradeSN[11] := '1';
   
   PosProxyDoTrade(InitHnadler, @t_request, @t_response);
 end;
