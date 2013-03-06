@@ -1,0 +1,51 @@
+<HTML>
+	<HEAD>
+		<TITLE>Test</TITLE>
+
+		<SCRIPT language=vbscript>
+			sub getname()
+				AppString.InnerText = Window.External.Getname
+			end sub
+
+			sub remakenumberlist()
+				Numbers.InnerText = ""
+
+				for temp = 1 to window.external.getnumber-1
+					Numbers.InnerText = Numbers.InnerText & Temp & ", "
+				next
+			
+				Numbers.InnerText = Numbers.InnerText & "and " & Window.External.GetNumber
+			end sub
+
+			sub updatestring()
+				window.external.setstring = StringValue.Value
+			end sub
+
+			sub updateprogress()
+				window.external.newprogressvalue = ProgressValue.Value
+			end sub
+
+			sub processform()
+				if window.external.ShowSpecialDialogBox = false then
+					alert("You pressed the cancel button :-(")
+				else
+					alert("You pressed the ok button :-)")
+				end if
+			end sub
+		</SCRIPT>
+	</HEAD>
+<BODY>		
+	<B>Lets test getting variables from our parent application</B><BR>					  	                 
+	Name: <SPAN ID="AppString"></SPAN><BUTTON onclick="getname()">Update</BUTTON><BR>
+	Sequence Of Numbers: <SPAN ID="Numbers"></SPAN><BUTTON onclick="remakenumberlist()">Update</BUTTON>
+
+	<P>
+
+	<B>Lets test setting variables in our parent application</B><BR>					  	                 
+	A string value: <INPUT NAME="StringValue" value="Hello Delphi!"><BUTTON onclick="updatestring()">Update</button><BR>
+	New Progress equals (%): <INPUT NAME="ProgressValue" value="75"><BUTTON onclick="updateprogress()">Update</button>
+	
+	<P>
+	<A HREF="#" ONCLICK="ProcessForm()">Click Here to continue</A>
+</BODY>
+</HTML>
