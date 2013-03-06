@@ -158,7 +158,7 @@ procedure TForm1.btnTradeClick(Sender: TObject);
     t_response : TTradeRsp;
     p_request : TradeReq;
     p_response : TradeRsp;
-    money : array[0..12] of char;
+    money : string;
 begin
   t_request.cType := '0'; //交易类型， 正常消费
   t_request.payType := '1'; //支付方式，银联卡
@@ -167,22 +167,10 @@ begin
   t_request.sType[0] := '0';
   t_request.sType[1] := '0';
 
-  t_request.carrTradeSum[0] := '0';
-  t_request.carrTradeSum[1] := '0';
-  t_request.carrTradeSum[2] := '0';
-  t_request.carrTradeSum[3] := '0';
-  t_request.carrTradeSum[4] := '0';
-  t_request.carrTradeSum[5] := '0';
-  t_request.carrTradeSum[6] := '0';
-  t_request.carrTradeSum[7] := '0';
-  t_request.carrTradeSum[8] := '0';
-  t_request.carrTradeSum[9] := '0';
-  t_request.carrTradeSum[10] := '0';
-  t_request.carrTradeSum[11] := '1';
-  t_request.carrTradeSum[12] := '0'; //交易金额，0.01圆
+  strpcopy(t_request.carrTradeSum, edtMoney.Text);  //交易金额，0.01圆
+
   //交易流水号， 12 个字符
   //原交易流水号，6个字符，查询撤销时使用
-
   {t_request.carrTermSN[0] := '0';
   t_request.carrTermSN[1] := '0';
   t_request.carrTermSN[2] := '0';
