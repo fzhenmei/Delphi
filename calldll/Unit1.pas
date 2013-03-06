@@ -158,7 +158,7 @@ procedure TForm1.btnTradeClick(Sender: TObject);
     t_response : TTradeRsp;
     p_request : TradeReq;
     p_response : TradeRsp;
-    money : string;
+    carrTradeSn : string;
 begin
   t_request.cType := '0'; //交易类型， 正常消费
   t_request.payType := '1'; //支付方式，银联卡
@@ -179,19 +179,21 @@ begin
   t_request.carrTermSN[5] := '0';
   t_request.carrTermSN[6] := '1';}
 
-  t_request.carrTradeSN[0] := '0';
-  t_request.carrTradeSN[1] := '0';
-  t_request.carrTradeSN[2] := '0';
-  t_request.carrTradeSN[3] := '0';
-  t_request.carrTradeSN[4] := '0';
-  t_request.carrTradeSN[5] := '0';
-  t_request.carrTradeSN[6] := '1';
-  t_request.carrTradeSN[7] := '0';
-  t_request.carrTradeSN[8] := '0';
-  t_request.carrTradeSN[9] := '0';
-  t_request.carrTradeSN[10] := '0';
-  t_request.carrTradeSN[11] := '1';
-  
+  carrTradeSn := edtNo.Text;
+
+  strpcopy(t_request.carrTradeSN, carrTradeSn);
+//  t_request.carrTradeSN[1] := '0';
+//  t_request.carrTradeSN[2] := '0';
+//  t_request.carrTradeSN[3] := '0';
+//  t_request.carrTradeSN[4] := '0';
+//  t_request.carrTradeSN[5] := '0';
+//  t_request.carrTradeSN[6] := '1';
+//  t_request.carrTradeSN[7] := '0';
+//  t_request.carrTradeSN[8] := '0';
+//  t_request.carrTradeSN[9] := '0';
+//  t_request.carrTradeSN[10] := '0';
+//  t_request.carrTradeSN[11] := '1';
+
   PosProxyDoTrade(InitHnadler, @t_request, @t_response);
 end;
 
