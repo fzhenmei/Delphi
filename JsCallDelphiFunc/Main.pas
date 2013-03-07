@@ -33,7 +33,7 @@ end;
 procedure TForm1.embdwb1GetExternal(Sender: TCustomEmbeddedWB;
   var ppDispatch: IDispatch);
 begin
-  ShowMessage('Call from script', 'Hi')
+  ShowMessage('Call from script');
 end;
 
 end.
